@@ -1,0 +1,26 @@
+# Default values for device-registry.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+database:
+  volume:
+    storageClassName: standard
+  rootPassword: something
+  database_name: device_db
+
+mysql:
+  image: mysql
+  tag: "5.6"
+
+device:
+  image: "quay.io/susdas/device_image" 
+  tag: "latest"
+
+application:
+  name: device-registry-app
+
+replicaCount: 1
+
+#service:
+#  type: ClusterIP
+#  port: 80

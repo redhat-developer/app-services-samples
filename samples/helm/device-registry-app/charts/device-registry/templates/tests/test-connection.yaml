@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "device-registry.fullname" . }}-test-connection"
+  namespace: {{.Release.Namespace}}
+  labels:
+    {{- include "device-registry.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  containers:
+    - name: curl-test
+      image: registry.access.redhat.com/ubi8/ubi:latest
+      command:
+        - '/bin/bash'
+        - '-ec'
+        - >
+          curl http://$RESTAPI_SERVICE_HOST:$RESTAPI_SERVICE_PORT
+  restartPolicy: Never

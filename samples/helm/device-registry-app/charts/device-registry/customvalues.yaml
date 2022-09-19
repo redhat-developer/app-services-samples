@@ -1,0 +1,6 @@
+database:
+  volume:
+    storageClassName: gp2
+  rootPassword: something
+  database_name: device_db
+
