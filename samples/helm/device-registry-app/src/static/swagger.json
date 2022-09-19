@@ -1,0 +1,142 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "Device Registry Service Application",
+      "version": "1.0.0",
+      "title": "Device Registry Service API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "tags": [
+      {
+        "name": "Device",
+        "description": "To register, deregister or get details of a device"
+      },
+      {
+        "name": "Devices",
+        "description": "To get all the devices"
+      }
+    ],
+    "servers": [
+      {
+        "url": "/"
+      }
+    ],
+    "components": {
+      "schemas": {
+          "DeviceDetails": {
+              "type": "object",
+              "properties": {
+                  "name": { "type": "string", "description": "Name of the device" },
+                  "device_type": { "type": "string", "description": "Type of the device"},
+                  "controller_gateway": {"type": "string", "description": "IP of the device"}
+                }
+            },
+          "Identifier":{
+            "type" : "string",
+            "description" : "Universally unique identifier"
+            }
+        }
+    },
+    "paths": {
+      "/devices": {
+          "get" :{
+              "tags": [ "Devices" ],
+              "summary": "Get all the devices",
+             
+              "responses": {
+                "200": {
+                  "description": "OK"
+                },
+                "404": {
+                  "description": "Not Found any device"
+                }
+              }
+            }
+        },
+        "/device/{identifier}":{
+
+          "get" :{
+              "tags": [ "Device" ],
+              "summary": "Get the device details with a identifier",
+              "parameters": [{
+                "name" : "identifier",
+                "in": "path",
+                "description": "Id of the device",
+                "required" : true,
+                "type": "string",
+                "schema": { "$ref": "#/components/schemas/Identifier"}
+                }],
+              "responses": {
+                "200": {
+                  "description": "OK",
+                  "schema": {
+                  "$ref": "#/components/schemas/DeviceDetails"
+                  }
+                },
+                "404": {
+                  "description": "Not Found"
+                }
+              }
+          },
+         
+          "put": {
+            "tags": [ "Device"],
+            "summary": "Register a device",
+            "parameters": [
+              {
+                "name" : "identifier",
+                "in": "path",
+                "description": "Id of the device",
+                "required" : true,
+                "type": "string",
+                "schema": { "$ref": "#/components/schemas/Identifier"}
+              }
+            ],
+            "requestBody": {
+              "description": "Device details",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/DeviceDetails"
+                      }
+                  }
+              }
+            },
+            "responses": {
+              "201": {
+                  "description": "Created"
+                },
+              "409": {
+                  "description": "Device already exists"
+              }
+            }
+          },
+
+          "delete": {
+            "tags": [ "Device" ],
+            "summary": "Deregister a device",
+            "parameters": [{
+              "name" : "identifier",
+              "in": "path",
+              "description": "Id of the device",
+              "required" : true,
+              "type": "string",
+              "schema": { "$ref": "#/components/schemas/Identifier"}
+              }],
+            "responses": {
+              "204": {
+                  "description": "No Content"
+                },
+              "404": {
+                  "description": "Device does not exists"
+              }
+            }
+          }
+        }
+      }
+}
+  

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: restapi
+  name: {{ include "dep.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: restapi
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: restapi
+    spec:
+      containers:
+      - image: {{ .Values.device.image }}:{{ .Values.device.tag }}
+        name: device-image
+        resources: {}
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: restapi-cm
+              key: host
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: restapi-cm
+              key: dbname
+        - name: DB_PWD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-password
+              key: rootpassword
+status: {}
