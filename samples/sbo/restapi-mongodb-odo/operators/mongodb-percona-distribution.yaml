@@ -7,7 +7,7 @@ spec:
   name: percona-server-mongodb-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: percona-server-mongodb-operator.v1.11.0
+  startingCSV: percona-server-mongodb-operator.v1
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
