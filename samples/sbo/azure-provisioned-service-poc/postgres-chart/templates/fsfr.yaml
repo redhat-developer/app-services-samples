@@ -1,0 +1,9 @@
+apiVersion: dbforpostgresql.azure.com/v1beta20210601
+kind: FlexibleServersFirewallRule
+metadata:
+  name: {{ .Values.fsd.name }}
+spec:
+  owner:
+    name: {{ .Values.fsd.name }} 
+  startIpAddress: 0.0.0.0 #! only allow traffic from azure. See https://docs.microsoft.com/en-us/azure/postgresql/single-server/concepts-firewall-rules#connecting-from-azure. Warning not for production use.
+  endIpAddress: 0.0.0.0

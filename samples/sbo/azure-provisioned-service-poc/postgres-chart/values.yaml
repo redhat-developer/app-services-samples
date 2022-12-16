@@ -1,0 +1,5 @@
+fsd:
+  name: test-demo-db
+
+dbcreds:
+  password: secret123

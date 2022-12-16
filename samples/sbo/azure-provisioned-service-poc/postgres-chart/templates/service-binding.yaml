@@ -1,0 +1,15 @@
+apiVersion: servicebinding.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: servicebinding-rds-endpoint-demo
+spec:
+  service:
+    apiVersion: dbforpostgresql.azure.com/v1beta20210601
+    kind: FlexibleServersDatabase
+    name: {{ .Values.fsd.name }}
+  workload:
+    selector:
+      matchLabels:
+        psql.provider: azure
+    apiVersion: apps/v1
+    kind: Deployment

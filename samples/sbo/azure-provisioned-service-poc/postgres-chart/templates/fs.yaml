@@ -1,0 +1,19 @@
+apiVersion: dbforpostgresql.azure.com/v1beta20210601
+kind: FlexibleServer
+metadata:
+  name: {{ .Values.fsd.name }}
+spec:
+  location: centralus
+  azureName: {{ .Values.fsd.name }} #! CHANGE THIS NAME
+  owner:
+    name: {{ .Values.fsd.name }} #! the ResourceGroup above
+  version: "13" #! only 11,12,13 supported
+  sku:
+    name: Standard_D4s_v3
+    tier: GeneralPurpose
+  administratorLogin: myAdmin
+  administratorLoginPassword:
+    name: {{ .Values.fsd.name }} 
+    key: password
+  storage:
+    storageSizeGB: 128

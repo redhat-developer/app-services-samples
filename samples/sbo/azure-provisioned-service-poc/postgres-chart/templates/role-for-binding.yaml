@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backingservice-read-access-for-service-binding
+  labels:
+    servicebinding.io/controller: "true"
+rules:
+  - apiGroups: ["dbforpostgresql.azure.com"]
+    resources: ["flexibleserversdatabases", "flexibleserversdatabases/status"]
+    verbs: ["get", "list", "watch"]
