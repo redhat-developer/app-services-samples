@@ -5,8 +5,8 @@ import os
 from botocore.exceptions import ClientError
 from kubernetes import client, config
 
-K8_HOST = os.environment["K8_HOST"]
-K8_TOKEN_SECRET = os.environment["K8_TOKEN_SECRET"]
+K8_HOST = os.environ["K8_HOST"]
+K8_TOKEN_SECRET = os.environ["K8_TOKEN_SECRET"]
 
 cf = boto3.client('cloudformation')
 session = boto3.session.Session()
