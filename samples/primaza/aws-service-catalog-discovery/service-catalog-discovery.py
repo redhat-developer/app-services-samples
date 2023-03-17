@@ -104,7 +104,7 @@ def lambda_handler(event, context):
     status = config["message"]["ResourceStatus"].strip("'")
     if resource_type == "AWS::CloudFormation::Stack" and status == "CREATE_COMPLETE":
         stack_id = config["message"]["StackId"].strip("'")
-        stack_name = config["message"]["StackName"].strip("'")
+        stack_name = config["message"]["StackName"].strip("'").lower()
         output = _get_stack_output(stack_id)
         secret_id = output["DBPasswordRef"]
         password = _get_secret(secret_id, "password")
@@ -113,7 +113,7 @@ def lambda_handler(event, context):
         _create_primaza_registered_service(output, stack_name)
         #print(json.dumps(output, indent=4))
     elif resource_type == "AWS::CloudFormation::Stack" and status == "DELETE_COMPLETE":
-        stack_name = config["message"]["StackName"].strip("'")
+        stack_name = config["message"]["StackName"].strip("'").lower()
         print(f"Deleting Registered Service {stack_name}")
         _remove_primaza_registered_service(stack_name)
 
